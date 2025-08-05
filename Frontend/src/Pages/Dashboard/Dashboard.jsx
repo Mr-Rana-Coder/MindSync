@@ -89,10 +89,10 @@ const Dashboard = () => {
                         <div className='flex items-center'>
                             <p className='pr-3'><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4f4f4f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-line-icon lucide-chart-line"><path d="M3 3v16a2 2 0 0 0 2 2h16" /><path d="m19 9-5 5-4-4-3 3" /></svg></p>
                             <select className='w-full px-4 py-2 border-1 border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-0  font-medium text-gray-700 bg-white hover:cursor-pointer'>
-                                <option value="volvo"> Last 7 Days</option>
-                                <option value="saab"> Last Month</option>
-                                <option value="fiat">Last Year</option>
-                                <option value="audi">All</option>
+                                <option value="Day"> Last 7 Days</option>
+                                <option value="Month"> Last Month</option>
+                                <option value="Year">Last Year</option>
+                                <option value="All">All</option>
                             </select>
                         </div>
                     </div>
