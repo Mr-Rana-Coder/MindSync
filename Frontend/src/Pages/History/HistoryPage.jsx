@@ -98,7 +98,7 @@ const HistoryPage = () => {
                 </div>
 
                 <div className='w-full h-30'>
-                    <div className='flex pt-5 pl-5 items-center'>
+                    <div className='flex pl-5 items-center'>
                         <p className='font-sans font-medium text-md text-gray-800 pr-3'>January 14, 2025</p>
                         <div className='w-15 h-5 font-sans font-medium text-sm text-gray-800 bg-gray-200 rounded-xl flex items-center justify-center'>Happy</div>
                     </div>
@@ -117,7 +117,7 @@ const HistoryPage = () => {
                 </div>
 
                 <div className='w-full h-30'>
-                    <div className='flex pt-5 pl-5 items-center'>
+                    <div className='flex pl-5 items-center'>
                         <p className='font-sans font-medium text-md text-gray-800 pr-3'>January 14, 2025</p>
                         <div className='w-15 h-5 font-sans font-medium text-sm text-gray-800 bg-gray-200 rounded-xl flex items-center justify-center'>Happy</div>
                     </div>
@@ -128,7 +128,7 @@ const HistoryPage = () => {
 
                     <div className='flex justify-between pt-4 pl-5 items-center'>
                         <p className='font-sans font-medium text-gray-500 text-md'> Word Count: 487</p>
-                        <div className='font-sans font-medium text-gray-500 text-md pr-5'>Expand <span></span></div>
+                        <div className='font-sans font-medium text-gray-500 text-md pr-5 hover:cursor-pointer hover:text-gray-800'>Expand</div>
                     </div>
                 </div>
             </div>

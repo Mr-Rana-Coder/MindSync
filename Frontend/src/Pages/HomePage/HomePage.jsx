@@ -1,11 +1,102 @@
-
+import {
+    Chart as ChartJS, ArcElement, Tooltip, CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Legend
+} from "chart.js";
+import { Pie, Line } from 'react-chartjs-2';
 import { useState } from "react";
-import HomePageFooter from '../../Components/Footer/HomePageFooter';
-import HomePageHeader from "../../Components/Header/HomePageHeader";
-
 
 const HomePage = () => {
     const [activeTab, setActiveTab] = useState("weekly");
+    {
+        ChartJS.register(
+            CategoryScale,
+            LinearScale,
+            PointElement,
+            LineElement,
+            Title,
+            Tooltip,
+            Legend,
+            ArcElement
+        )
+    }
+    const pieChartData = {
+        labels: ['Happy', 'Sad', 'Neutral', 'Stresses', 'Excited'],
+        datasets: [
+            {
+                label: 'Mood',
+                data: [10, 10, 10, 10, 10],
+                backgroundColor: [
+                    'rgba(229, 231, 235, 0.5)',
+                    'rgba(209, 213, 219, 0.5)',
+                    'rgba(156, 163, 175, 0.5)',
+                    'rgba(107, 114, 128, 0.5)',
+                    'rgba(75, 85, 99, 0.5)',
+                ],
+                borderColor: [
+                    'rgba(229, 231, 235, 0.7)',
+                    'rgba(209, 213, 219, 0.7)',
+                    'rgba(156, 163, 175, 0.7)',
+                    'rgba(107, 114, 128, 0.7)',
+                    'rgba(75, 85, 99, 0.7)',
+                ],
+                borderWidth: 0.5,
+            },
+        ],
+    };
+
+    const pieChartOptions = {
+        plugins: {
+            legend: {
+                display: true,
+                position: "top",
+                align: "center",
+                labels: {
+                    boxWidth: 10,
+                    padding: 24,
+                    usePointStyle: true,
+                },
+            },
+        },
+        maintainAspectRatio: false,
+    };
+
+
+    const lineChartData = {
+        labels: ["Aug 8", "Aug 9", "Aug 10", "Aug 11", "Aug 12", "Aug 13", "Today"],
+        datasets: [
+            {
+                label: "Mood Score",
+                data: [0, 2, -2, 2, -2, -3, 1],
+                fill: true,
+                backgroundColor: "rgba(54, 162, 235, 0.12)",
+                borderColor: "rgba(54, 162, 235, 1)",
+                tension: 0.3,
+            },
+        ],
+    }
+
+    const lineChartOptions = {
+        responsive: true,
+        plugins: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: "Overall Mood Score Timeline",
+            },
+        },
+        scales: {
+            y: {
+                suggestedMin: -3.5,
+                suggestedMax: 3.5,
+                ticks: { stepSize: 2 },
+            },
+        },
+    };
+
     return (
         <div>
             {/* Main Home Page */}
@@ -35,7 +126,7 @@ const HomePage = () => {
                 </div>
                 <div className='pl-30'>
                     <div className="w-[500px] h-[350px] bg-gray-200 rounded-xl flex items-center justify-center text-gray-500">
-                        Calming Dashboard Preview
+                       <img src="../../../public/Images/sddefault2.jpg" alt="" className="w-full h-full rounded-xl "/>
                     </div>
                 </div>
             </div>
@@ -116,15 +207,15 @@ const HomePage = () => {
                     </div>
                     <div className='flex justify-between pt-5'>
                         <div className='bg-gray-50 w-1/2 p-3 mr-3 rounded-xl h-90'>
-                            <p className='p-3 font-medium font-sans text-black'>Mood Distribution</p>
-                            <div className='bg-gray-200 w-150 h-67 rounded-xl m-3'>
-
+                            <p className='pl-3 pt-3 pb-2 font-medium font-sans text-black'>Mood Distribution</p>
+                            <div className='w-152 h-69 rounded-xl flex items-center justify-center'>
+                                <Pie data={pieChartData} options={pieChartOptions} />
                             </div>
                         </div>
                         <div className='bg-gray-50 w-1/2 p-2 ml-3 rounded-xl h-90'>
-                            <p className='p-3 font-medium font-sans text-black'>Mood Timeline</p>
-                            <div className='bg-gray-200 w-150 h-67 rounded-xl m-3'>
-
+                            <p className='pl-3 pt-3 pb-2 font-medium font-sans text-black'>Mood Timeline</p>
+                            <div className='bg-gray-100 w-150 h-69 rounded-xl m-3 flex items-center justify-center'>
+                                <Line data={lineChartData} options={lineChartOptions} />
                             </div>
                         </div>
                     </div>

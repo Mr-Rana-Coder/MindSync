@@ -9,6 +9,12 @@ import ContactPage from "./Pages/Contact/ContactPage.jsx";
 import AboutPage from "./Pages/About/AboutPage.jsx";
 import Signup from "./Components/Signup/Signup.jsx";
 import Login from "./Components/Login/Login.jsx";
+import Dashboard from './Pages/Dashboard/Dashboard.jsx';
+import JournalPage from './Pages/Journal/JournalPage.jsx'
+import HistoryPage from './Pages/History/HistoryPage.jsx'
+import SettingPage from './Pages/SettingPage/SettingPage.jsx'
+
+
 
 const router = createBrowserRouter([
   {
@@ -30,6 +36,22 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <ContactPage />,
+      }, 
+      {
+        path: "/dashboard",
+        element:<Dashboard/>
+      },
+      {
+        path:"/journal",
+        element:<JournalPage/>
+      },
+      {
+        path:"/history",
+        element:<HistoryPage/>
+      },
+      {
+        path:"/settings",
+        element:<SettingPage/>
       }
     ]
   },
@@ -47,9 +69,6 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-  <BrowserRouter>
-    {/* <RouterProvider router={router} /> */}
-    <App/>
-    </BrowserRouter>
+      <RouterProvider router={router} />
   </StrictMode>,
 )
