@@ -1,0 +1,27 @@
+{
+  "name": "mindsync",
+  "version": "1.0.0",
+  "description": "Ai Jounralling Application ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mr-Rana-Coder/MindSync.git"
+  },
+  "author": "Sahil Rana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mr-Rana-Coder/MindSync/issues"
+  },
+  "homepage": "https://github.com/Mr-Rana-Coder/MindSync#readme",
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "mongoose": "^8.17.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
