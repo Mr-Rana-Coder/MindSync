@@ -1,3 +1,5 @@
+import HomePageLineChart from "../../Components/LineChart/HomePageLineChart"
+
 const AboutPage = () => {
     return (
         <div>
@@ -29,10 +31,11 @@ const AboutPage = () => {
                     </div>
 
                     <div id='right' className="w-1/2 h-80 bg-gray-100 ml-17 mr-20 mt-15 rounded-xl">
-                        <div className="bg-gray-400 h-4/5 rounded-xl m-8 relative">
-                            <p className="text-white font-medium font-sans text-xl absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                                Mental Health Statistics Visualization
-                            </p>
+                        <div className="bg-white h-4/5 rounded-xl m-8 flex items-center justify-center">
+                            {/* <p className="text-white font-medium font-sans text-xl absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                                
+                            </p> */}
+                            <HomePageLineChart/>
                         </div>
                     </div>
                 </div>
@@ -115,48 +118,48 @@ const AboutPage = () => {
                         <p className="font-sans font-medium text-3xl text-gray-800">Advanced Technology</p>
                         <div className="pt-4">
                             <div className="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot-icon lucide-bot"><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot-icon lucide-bot"><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
                                 <p className="font-sans font-bold text-lg text-gray-800 pl-2">Machine Learning</p>
                             </div>
-                            <p className="font-sans font-medium text-sm text-gray-700 pl-7">Natural language processing for mood analysis</p>
+                            <p className="font-sans font-medium text-sm text-gray-700 pl-8">Natural language processing for mood analysis</p>
                         </div>
                         <div className="pt-4">
                             <div className="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot-icon lucide-bot"><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
-                                <p className="font-sans font-bold text-lg text-gray-800 pl-2">Machine Learning</p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cloud-icon lucide-cloud"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" /></svg>
+                                <p className="font-sans font-bold text-lg text-gray-800 pl-2">Cloud Infrastructure</p>
                             </div>
-                            <p className="font-sans font-medium text-sm text-gray-700 pl-7">Natural language processing for mood analysis</p>
+                            <p className="font-sans font-medium text-sm text-gray-700 pl-8">Scalable and reliable service delivery</p>
                         </div>
                         <div className="pt-4">
                             <div className="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot-icon lucide-bot"><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
-                                <p className="font-sans font-bold text-lg text-gray-800 pl-2">Machine Learning</p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-laptop-icon lucide-laptop"><path d="M18 5a2 2 0 0 1 2 2v8.526a2 2 0 0 0 .212.897l1.068 2.127a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45l1.068-2.127A2 2 0 0 0 4 15.526V7a2 2 0 0 1 2-2z" /><path d="M20.054 15.987H3.946" /></svg>
+                                <p className="font-sans font-bold text-lg text-gray-800 pl-2">Cross-Platform</p>
                             </div>
-                            <p className="font-sans font-medium text-sm text-gray-700 pl-7">Natural language processing for mood analysis</p>
+                            <p className="font-sans font-medium text-sm text-gray-700 pl-8">Available on Windows, IOS and Bing</p>
                         </div>
                     </div>
                     <div className="w-1/2 p-12 pl-5">
-                        <p className="font-sans font-medium text-3xl text-gray-800">Advanced Technology</p>
+                        <p className="font-sans font-medium text-3xl text-gray-800">Privacy First</p>
                         <div className="pt-4">
                             <div className="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot-icon lucide-bot"><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
-                                <p className="font-sans font-bold text-lg text-gray-800 pl-2">Machine Learning</p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-icon lucide-shield"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /></svg>
+                                <p className="font-sans font-bold text-lg text-gray-800 pl-2">End-to-End Encryption</p>
                             </div>
-                            <p className="font-sans font-medium text-sm text-gray-700 pl-7">Natural language processing for mood analysis</p>
+                            <p className="font-sans font-medium text-sm text-gray-700 pl-8">Your data is encrypted and secure</p>
                         </div>
                         <div className="pt-4">
                             <div className="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot-icon lucide-bot"><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
-                                <p className="font-sans font-bold text-lg text-gray-800 pl-2">Machine Learning</p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cpu-icon lucide-cpu"><path d="M12 20v2" /><path d="M12 2v2" /><path d="M17 20v2" /><path d="M17 2v2" /><path d="M2 12h2" /><path d="M2 17h2" /><path d="M2 7h2" /><path d="M20 12h2" /><path d="M20 17h2" /><path d="M20 7h2" /><path d="M7 20v2" /><path d="M7 2v2" /><rect x="4" y="4" width="16" height="16" rx="2" /><rect x="8" y="8" width="8" height="8" rx="1" /></svg>
+                                <p className="font-sans font-bold text-lg text-gray-800 pl-2">Anonymous Processing</p>
                             </div>
-                            <p className="font-sans font-medium text-sm text-gray-700 pl-7">Natural language processing for mood analysis</p>
+                            <p className="font-sans font-medium text-sm text-gray-700 pl-8">Personal data is anonymized for anlysis</p>
                         </div>
                         <div className="pt-4">
                             <div className="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot-icon lucide-bot"><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
-                                <p className="font-sans font-bold text-lg text-gray-800 pl-2">Machine Learning</p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-icon lucide-user-round"><circle cx="12" cy="8" r="5" /><path d="M20 21a8 8 0 0 0-16 0" /></svg>
+                                <p className="font-sans font-bold text-lg text-gray-800 pl-2">Personal Guide</p>
                             </div>
-                            <p className="font-sans font-medium text-sm text-gray-700 pl-7">Natural language processing for mood analysis</p>
+                            <p className="font-sans font-medium text-sm text-gray-700 pl-8">One to One Interactions</p>
                         </div>
                     </div>
                 </div>

@@ -11,7 +11,7 @@ const SendMessage = () => {
                         <input
                             type="text"
                             placeholder="Sahil"
-                            className="w-75 h-10 px-3 bg-white rounded-sm text-black border border-gray-300 outline-none shadow-sm"
+                            className="w-75 h-10 px-3 bg-white rounded-sm border border-gray-300 outline-none shadow-sm font-sans font-medium text-gray-800"
                         />
                     </div>
                     <div className="pt-4 pl-2 w-full">
@@ -19,20 +19,20 @@ const SendMessage = () => {
                         <input
                             type="text"
                             placeholder="Rana"
-                            className="w-75 h-10 px-3 bg-white rounded-sm text-black border border-gray-300 outline-none shadow-sm"
+                            className="w-75 h-10 px-3 bg-white rounded-sm font-sans font-medium text-gray-800 border border-gray-300 outline-none shadow-sm"
                         />
                     </div>
                 </div>
                 <div className='pl-6 w-full'>
                     <p className='font-sans font-normal text-lg text-gray-700 pt-4 pb-1'>Email</p>
-                    <input type="text" placeholder='abc@gmail.com' className=' w-157 h-10 bg-white rounded-sm text-black border border-gray-300 outline-none px-3 shadow-sm' />
+                    <input type="text" placeholder='abc@gmail.com' className=' w-157 h-10 bg-white rounded-sm font-sans font-medium text-gray-800 border border-gray-300 outline-none px-3 shadow-sm' />
                 </div>
 
                 <div className="pl-6 w-full">
                     <p className="font-sans font-normal text-lg text-gray-700 pt-4 pb-1">Message</p>
                     <textarea
                         placeholder="Tell us about the problem . . ."
-                        className="w-157 h-40 bg-white rounded-sm text-black border border-gray-300 outline-none p-2 resize-none shadow-sm"
+                        className="w-157 h-40 bg-white rounded-sm font-sans font-medium text-gray-800 border border-gray-300 outline-none p-2 resize-none shadow-sm"
                     />
                 </div>
 

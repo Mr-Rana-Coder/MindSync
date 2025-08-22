@@ -16,37 +16,37 @@ const Signup = () => {
 
                     <div className='pt-4'>
                         <p className='font-medium font-sans text-center text-3xl text-gray-800 '>Create your account</p>
-                        <p className=' font-medium font-sans text-center text-lg text-gray-600 pt-1'> Or <span className='font-medium font-sans text-center text-sm text-gray-900 hover:underline hover:text-gray-600 hover:cursor-pointer' onClick={() => (navigate("/login"))}>Sign in to your Account</span></p>
+                        <p className=' font-medium font-sans text-center text-lg text-gray-600 pt-1'> Or <span className='font-medium font-sans text-center text-sm text-gray-900 hover:underline hover:text-gray-600 hover:cursor-pointer' onClick={() => (navigate("/signin"))}>Sign in to your Account</span></p>
                     </div>
 
                     <div className='pt-5 w-full flex gap-4'>
                         <div className="w-1/2 ml-3">
                             <p className='pb-2 font-medium'>First Name</p>
-                            <input type="text" placeholder="First" className=' w-full h-10 bg-white rounded-sm text-black border border-gray-300 outline-none px-3 shadow-sm' />
+                            <input type="text" placeholder="First" className=' w-full h-10 bg-white rounded-sm text-gray-800 font-sans font-medium border border-gray-300 outline-none px-3 shadow-sm' />
                         </div>
 
                         <div className="w-1/2 mr-5">
                             <p className='pb-2 font-medium'>Last Name</p>
-                            <input type="text" placeholder="Last" className='w-full h-10 bg-white rounded-sm text-black border border-gray-300 outline-none px-3 shadow-sm' /></div>
+                            <input type="text" placeholder="Last" className='w-full h-10 bg-white rounded-sm text-gray-800 font-sans font-medium border border-gray-300 outline-none px-3 shadow-sm' /></div>
                     </div>
 
                     <div className="pt-3 pl-3 w-full pr-5">
                         <p className='font-medium pb-2'>Email</p>
-                        <input type="text" placeholder='me@example.com' className=' w-full h-10 bg-white rounded-sm text-black border border-gray-300 outline-none px-3 shadow-sm' />
+                        <input type="text" placeholder='me@example.com' className=' w-full h-10 bg-white rounded-sm text-gray-800 font-sans font-medium border border-gray-300 outline-none px-3 shadow-sm' />
                     </div>
 
                     <div className='pt-3 pl-3 pr-5'>
                         <div className=' pb-2'>
                             <p className='font-medium '>New Password</p>
                         </div>
-                        <input type="text" placeholder='New Password' className='bg-white rounded-sm text-black border border-gray-300 outline-none px-3 shadow-sm w-full h-10 p-2' />
+                        <input type="text" placeholder='New Password' className='bg-white rounded-sm text-gray-800 font-sans font-medium border border-gray-300 outline-none px-3 shadow-sm w-full h-10 p-2' />
                     </div>
 
                     <div className='pt-3 pl-3 pr-5'>
                         <div className='pb-2'>
                             <p className='font-medium '>Confirm Password</p>
                         </div>
-                        <input type="text" placeholder='Confirm Password' className='bg-white rounded-sm text-black border border-gray-300 outline-none px-3 shadow-sm w-full h-10 p-2' />
+                        <input type="text" placeholder='Confirm Password' className='bg-white rounded-sm text-gray-800 font-sans font-medium border border-gray-300 outline-none px-3 shadow-sm w-full h-10 p-2' />
                     </div>
 
                     <div className=' pr-5 pl-3 pt-5 mb-7'>

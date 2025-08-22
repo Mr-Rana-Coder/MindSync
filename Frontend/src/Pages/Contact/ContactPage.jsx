@@ -30,8 +30,8 @@ const ContactPage = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /><circle cx="12" cy="10" r="3" /></svg>
                     </div>
                     <p className='font-sans font-medium text-xl text-gray-800 pt-3'>Office</p>
-                    <p className='font-sans font-medium text-md text-gray-800 pt-2'>House No 123, Street 5</p>
-                    <p className='font-sans font-medium text-md text-gray-800'>Gurgaon, Haryana - 110059</p>
+                    <p className='font-sans font-medium text-md text-gray-800 pt-2'>Banarsidas Chandiwala Institue of Information Technology</p>
+                    <p className='font-sans font-medium text-md text-gray-800'>Kalkaji, New Delhi - 110019</p>
                 </div>
             </div>
 
@@ -42,7 +42,9 @@ const ContactPage = () => {
             <div className="w-full h-145 bg-white flex flex-col items-center">
                 <p className="text-center font-sans font-medium text-gray-800 text-4xl pt-10 pb-10">Find Us</p>
                 <div className="w-4/5 h-100 bg-gray-200  flex items-center justify-center shadow-sm rounded-xl">
-                <p className="font-sans font-medium text-gray-600 text-2xl">Interactive Map</p>
+                <div>
+                    <iframe className="h-100 w-338 rounded-xl" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3504.85231006652!2d77.26552877495347!3d28.5441585880894!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce3e6f3387459%3A0x8d7393c84adeda8e!2sBanarsidas%20Chandiwala%20Institute%20of%20Hotel%20Management%20and%20Catering%20Technology.!5e0!3m2!1sen!2sin!4v1755587661145!5m2!1sen!2sin" allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+                </div>
                 </div>
             </div>
         </div>

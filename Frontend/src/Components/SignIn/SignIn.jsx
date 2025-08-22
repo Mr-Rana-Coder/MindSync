@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 
-const Login = () => {
+const SignIn = () => {
     const navigate = useNavigate();
 
     return (
@@ -22,7 +22,7 @@ const Login = () => {
 
                     <div className='pt-5 mx-4'>
                         <p className='pb-2 font-medium'>Email</p>
-                        <input type="text" placeholder='me@example.com' className=' w-full h-10 bg-white rounded-sm text-black border border-gray-300 outline-none px-3 shadow-sm' />
+                        <input type="text" placeholder='me@example.com' className=' w-full h-10 bg-white rounded-sm text-gray-800 font-sans font-medium border border-gray-300 outline-none px-3 shadow-sm' />
                     </div>
 
                     <div className='p-4'>
@@ -30,7 +30,7 @@ const Login = () => {
                             <p className='font-medium '>Password</p>
                             <p className='hover:cursor-pointer hover:underline text-gray-900 hover:text-gray-600 font-sans font-medium '>Forgot Your Password ?</p>
                         </div>
-                        <input type="text" placeholder='password' className='bg-white rounded-sm text-black border border-gray-300 outline-none px-3 shadow-sm w-full h-10 p-2' />
+                        <input type="text" placeholder='password' className='bg-white rounded-sm text-gray-800 font-sans font-medium border border-gray-300 outline-none px-3 shadow-sm w-full h-10 p-2' />
                     </div>
 
                     <div className='mx-4 mt-2 mb-7'>
@@ -49,4 +49,4 @@ const Login = () => {
     )
 }
 
-export default Login;
+export default SignIn;

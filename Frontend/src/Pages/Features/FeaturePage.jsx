@@ -1,4 +1,4 @@
-import React from 'react'
+import HomePagePieChart from "../../Components/PieChart/HomePagePieChart"
 
 const FeaturePage = () => {
     return (
@@ -30,7 +30,7 @@ const FeaturePage = () => {
 
                 <div id='right' className='w-1/2 pl-20'>
                     <div className='w-170 h-93 bg-gray-200 rounded-xl flex justify-center items-center'>
-                        <p className='font-sans font-medium text-xl text-gray-600'>Voice Recording Interface</p>
+                        <img src="https://images.yourstory.com/cs/2/25e9e0e0605211e984534d4121ad4bb6/imag2-1613145956231.png?mode=crop&crop=faces&ar=2%3A1&format=auto&w=1920&q=75" className='w-full h-full rounded-xl shadow-md border-2' alt="" />
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@ const FeaturePage = () => {
             <div className='bg-white w-full h-130 flex justify-between items-center'>
                 <div id='left' className='w-1/2 p-25'>
                     <div className='w-170 h-93 bg-gray-200 rounded-xl flex justify-center items-center'>
-                        <p className='font-sans font-medium text-xl text-gray-600'>AI Analysis Dashboard</p>
+                        <img className='w-full h-full rounded-xl' src="https://betterflylb.com/wp-content/uploads/2024/10/Emotion-AI-The-Next-Frontier-in-Technology-Digital-Marketing-Agency-Lebanon-1160x700.jpg" alt="" />
                     </div>
                 </div>
                 <div id="right" className='pr-55'>
@@ -83,15 +83,15 @@ const FeaturePage = () => {
 
                 <div id='right' className='w-1/2 pl-20'>
                     <div className='w-170 h-93 bg-gray-200 rounded-xl flex justify-center items-center'>
-                        <p className='font-sans font-medium text-xl text-gray-600'>Mood Analytics Dashboard</p>
+                        <HomePagePieChart/>
                     </div>
                 </div>
             </div>
 
             <div className='bg-white w-full h-150 flex justify-between items-center'>
                 <div id='left' className='w-1/2 p-25'>
-                    <div className='w-170 h-93 bg-gray-200 rounded-xl flex justify-center items-center'>
-                        <p className='font-sans font-medium text-xl text-gray-600'>Journal History Interface</p>
+                    <div className='w-170 h-93 bg-white rounded-xl flex justify-center items-center'>
+                        <img src="https://static.vecteezy.com/system/resources/previews/024/045/697/non_2x/journal-graphic-clipart-design-free-png.png" className="w-full h-full rounded-xl" alt="" />
                     </div>
                 </div>
                 <div id="right" className='pr-55'>

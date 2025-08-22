@@ -8,7 +8,7 @@ import FeaturePage from "./Pages/Features/FeaturePage.jsx";
 import ContactPage from "./Pages/Contact/ContactPage.jsx";
 import AboutPage from "./Pages/About/AboutPage.jsx";
 import Signup from "./Components/Signup/Signup.jsx";
-import Login from "./Components/Login/Login.jsx";
+import SignIn from "./Components/SignIn/SignIn.jsx";
 import Dashboard from './Pages/Dashboard/Dashboard.jsx';
 import JournalPage from './Pages/Journal/JournalPage.jsx'
 import HistoryPage from './Pages/History/HistoryPage.jsx'
@@ -60,8 +60,8 @@ const router = createBrowserRouter([
     element: <Signup />
   },
   {
-    path: "/login",
-    element: <Login />
+    path: "/signin",
+    element: <SignIn />
   }
 ])
 
