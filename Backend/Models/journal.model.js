@@ -31,7 +31,7 @@ const journalSchema = new mongoose.Schema({
         },
         message: "You can store upto 5 insights only"
     },
-    JournalEntry: {
+    journalEntry: {
         type: String,
         required: true
     },
