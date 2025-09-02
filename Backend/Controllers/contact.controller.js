@@ -1,7 +1,7 @@
-import { Contact } from "../Models/contact.model";
-import { apiError } from "../Utils/apiError";
-import { apiResponse } from "../Utils/apiResponse";
-import { asyncHandler } from "../Utils/asyncHandler";
+import { Contact } from "../Models/contact.model.js";
+import { apiError } from "../Utils/apiError.js";
+import { apiResponse } from "../Utils/apiResponse.js";
+import { asyncHandler } from "../Utils/asyncHandler.js";
 
 const sendMessage = asyncHandler(async (req, res) => {
     const { firstName, lastName, email, message } = req.body;

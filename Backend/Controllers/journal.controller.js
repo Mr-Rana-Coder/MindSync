@@ -1,8 +1,8 @@
-import { Journal } from "../Models/journal.model";
-import { client } from "../Service/openAIClient";
-import { apiError } from "../Utils/apiError";
-import { apiResponse } from "../Utils/apiResponse";
-import { asyncHandler } from "../Utils/asyncHandler";
+import { Journal } from "../Models/journal.model.js";
+import { client } from "../Service/openAIClient.js";
+import { apiError } from "../Utils/apiError.js";
+import { apiResponse } from "../Utils/apiResponse.js";
+import { asyncHandler } from "../Utils/asyncHandler.js";
 import { groupByDay, getMoodCategory, groupByWeek } from "../Helper/chart.helper.js";
 
 function processData(entries, type) {

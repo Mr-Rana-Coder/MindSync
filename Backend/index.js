@@ -1,7 +1,7 @@
-import { app } from "./app";
+import { app } from "./app.js";
 import dotenv from "dotenv";
-import { DBConnect } from "./Database/db";
-import { apiError } from "./Utils/apiError";
+import { DBConnect } from "./Database/db.js";
+import { apiError } from "./Utils/apiError.js";
 
 dotenv.config({
     path: "./env"
@@ -15,4 +15,3 @@ DBConnect()
         console.error("Unable to connect to DB", error.message)
         throw new apiError(500, "DB connection problem")
     })
-

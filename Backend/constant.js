@@ -1,2 +1,1 @@
-export default dbName = "MindSyncDB"
-
+export const dbName = "MindSyncDB"

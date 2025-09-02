@@ -1,6 +1,6 @@
 import express from 'express';
-import { apiVerification } from '../Middlewares/authentication.middleware';
-import { chartData, journalAnalysis, journalHistory, exportJournalPDF } from '../Controllers/journal.controller';
+import { apiVerification } from '../Middlewares/authentication.middleware.js';
+import { chartData, journalAnalysis, journalHistory, exportJournalPDF } from '../Controllers/journal.controller.js';
 
 const router = express.Router();
 router.use(apiVerification);
