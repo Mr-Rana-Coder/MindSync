@@ -6,27 +6,26 @@ import { User } from "../Models/user.model.js";
 
 const apiVerification = asyncHandler(async (req, _, next) => {
     try {
-        const token = req.cookies?.accessToken || req.headers("Authorization")?.replace("Bearer ", "");
+        const token = req.cookies?.accessToken || req.headers["authorization"]?.replace("Bearer ", "");
         if (!token) {
-            throw new apiError(401, "User is not authenticated");
+            return next(new apiError(401, "User is not authenticated"));
         }
 
         const decode = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY);
 
         if (!decode) {
-            throw new apiError(500, "Unable to decode the Authentication key");
+            return next(new apiError(500, "Unable to decode the Authentication key"));
         }
 
         const user = await User.findById(decode._id).select(" -password ");
 
         if (!user) {
-            throw new apiError(404, "Unable to find the user");
+            return next(new apiError(404, "Unable to find the user"));
         }
-
         req.user = user;
         next();
     } catch (error) {
-        throw new apiError(500, error.message || "Error in the authentication middleware")
+        return next(new apiError(403, "Access token is expired"));
     }
 })
 

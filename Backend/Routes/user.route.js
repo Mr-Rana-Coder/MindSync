@@ -18,7 +18,7 @@ router.route("/logout").post(apiVerification, logoutUser);
 router.route("/get-current-user").get(apiVerification, getCurrentUser);
 router.route("/update-account-details").patch(apiVerification, updateAccountDetails);
 router.route("/update-password").patch(apiVerification, updatePassword);
-router.route("/refresh-access-token").patch(apiVerification, refreshAccessToken);
+router.route("/refresh-access-token").post(refreshAccessToken);
 
 export {
     router

@@ -4,8 +4,6 @@ import {
   PointElement,
   LineElement,
   Title,
-  Legend,
-  layouts
 } from "chart.js";
 import { Pie} from 'react-chartjs-2';
 
@@ -19,7 +17,6 @@ const DashboardPieChart = () => {
       Tooltip,
       ArcElement
     )
-    // Removed Legend 
   
     const pieChartData = {
       labels: ['Happy', 'Excited', 'Neutral', 'Stressed', 'Sad'],
@@ -49,7 +46,7 @@ const DashboardPieChart = () => {
     const pieChartOptions = {
       plugins: {
         legend: {
-          display: true,
+          display: false,
           position: "top",
           align: "center",
           labels: {

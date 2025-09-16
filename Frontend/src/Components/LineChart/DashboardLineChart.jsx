@@ -4,7 +4,6 @@ import {
     PointElement,
     LineElement,
     Title,
-    Legend
 } from "chart.js";
 import { Line } from 'react-chartjs-2';
 
@@ -17,7 +16,6 @@ const DashboardLineChart = () => {
         LineElement,
         Title,
         Tooltip,
-        // Legend,
         ArcElement
     )
 

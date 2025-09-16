@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import { BrowserRouter, createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import HomePage from "./Pages/HomePage/HomePage.jsx";
 import FeaturePage from "./Pages/Features/FeaturePage.jsx";
 import ContactPage from "./Pages/Contact/ContactPage.jsx";
@@ -13,8 +13,10 @@ import Dashboard from './Pages/Dashboard/Dashboard.jsx';
 import JournalPage from './Pages/Journal/JournalPage.jsx'
 import HistoryPage from './Pages/History/HistoryPage.jsx'
 import SettingPage from './Pages/SettingPage/SettingPage.jsx'
-
-
+import { Provider } from 'react-redux'
+import { persistor, store } from './Store/store.js'
+import { PersistGate } from 'redux-persist/integration/react'
+import PrivateRoute from './Components/PrivateRoute/PrivateRoute.jsx'
 
 const router = createBrowserRouter([
   {
@@ -38,21 +40,14 @@ const router = createBrowserRouter([
         element: <ContactPage />,
       }, 
       {
-        path: "/dashboard",
-        element:<Dashboard/>
+        element: <PrivateRoute />,
+        children: [
+          { path: "/dashboard", element: <Dashboard /> },
+          { path: "/journal", element: <JournalPage /> },
+          { path: "/history", element: <HistoryPage /> },
+          { path: "/settings", element: <SettingPage /> },
+        ],
       },
-      {
-        path:"/journal",
-        element:<JournalPage/>
-      },
-      {
-        path:"/history",
-        element:<HistoryPage/>
-      },
-      {
-        path:"/settings",
-        element:<SettingPage/>
-      }
     ]
   },
   {
@@ -69,6 +64,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
       <RouterProvider router={router} />
+      </PersistGate>
+      </Provider>
   </StrictMode>,
 )

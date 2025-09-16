@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import MoodDistribution from '../../Components/MoodDistribution/MoodDistribution';
 import MoodTimeline from '../../Components/MoodTimeline/MoodTimeline';
-import RecentEntries from '../../Components/RecentEntries/RecentEntries';
+import StressMeter from '../../Components/RecentEntries/RecentEntries';
+import EnergyLevels from '../../Components/EnergyLevels/EnergyLevels';
+import { api } from '../../Api/baseApi';
 
 const Dashboard = () => {
     const [activeTab, setActiveTab] = useState("weekly");
 
     return (
         <div className='w-full h-310 bg-gray-100'>
-            
+
             <div className='flex justify-between px-10 pt-8 '>
                 <div>
                     <p className='font-medium font-sans text-gray-800 text-2xl'>
@@ -49,8 +51,10 @@ const Dashboard = () => {
                 <MoodTimeline />
             </div>
 
-            {/* Recent Entries */}
-            <RecentEntries />
+            <div className='flex pt-10'>
+                <StressMeter/>
+                <EnergyLevels/>
+            </div>            
         </div>
     )
 }

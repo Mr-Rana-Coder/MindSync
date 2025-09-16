@@ -48,20 +48,19 @@ function processData(entries, type) {
 
 const chartData = asyncHandler(async (req, res) => {
     const { type } = req.params;
-    if(!type) throw new apiError(400,"Days type is required");
+    if (!type) throw new apiError(400, "Days type is required");
 
-    const userId = req.user.id;
-    if(!userId) throw new apiError(401,"User is not authenticated");
+    const userId = req.user?._id;
+    if (!userId) throw new apiError(401, "User is not authenticated");
 
-    const data ={};
+    let data = {};
 
     if (type === "weekly") {
         const endDate = new Date();
         const startDate = new Date();
-        startDate.setDate(endDate.getDate() - 6);
-
+        startDate.setDate(endDate.getDate() - 7);
         const entries = await Journal.find({
-            userId,
+            user: userId,
             date: { $gte: startDate, $lte: endDate },
         });
 
@@ -72,7 +71,7 @@ const chartData = asyncHandler(async (req, res) => {
         startDate.setDate(endDate.getDate() - 27);
 
         const entries = await Journal.find({
-            userId,
+            user: userId,
             date: { $gte: startDate, $lte: endDate },
         });
         data = processData(entries, "monthly");
@@ -81,7 +80,7 @@ const chartData = asyncHandler(async (req, res) => {
     return res
         .status(200)
         .json(new apiResponse(200, {
-            data: data
+            data
         }, "Data fetched successfully"));
 });
 
@@ -140,12 +139,12 @@ const journalHistory = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
     if (!userId) throw new apiError(400, "User is not authenticated");
 
-    const { page, limit } = req.query;
-    if (!limit || !page) throw new apiError(401, "Limit and page both are required");
+    const { page, limit } = req.params;
+    if (!limit || !page) throw new apiError(400, "Limit and page both are required");
 
     const offset = (page - 1) * limit;
 
-    const journal = await Journal.find({ journalEntry, moodLevel }).skip(offset).limit(limit);
+    const journal = await Journal.find({user:userId}).skip(offset).limit(limit).select("-user -stressLevel -energyLevel -keyInsights -date");
 
     if (!journal) throw new apiError(500, "Unable to fetch the journals");
 

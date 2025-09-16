@@ -6,14 +6,14 @@ import { asyncHandler } from "../Utils/asyncHandler.js";
 const sendMessage = asyncHandler(async (req, res) => {
     const { firstName, lastName, email, message } = req.body;
     if ([firstName, lastName, email, message].some((field) => (field?.trim === " "))) {
-        throw new apiError(401, "All fields are required")
+        return next(new apiError(401, "All fields are required"))
     }
 
     const contact = await Contact.create({
         firstName, lastName, email, message
     })
 
-    if (!contact) throw new apiResponse(500, "Unable to store the message in the model")
+    if (!contact) return next(new apiResponse(500, "Unable to store the message in the model"))
 
     return res
         .status(200)

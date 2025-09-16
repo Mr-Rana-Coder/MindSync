@@ -21,14 +21,14 @@ const generateAccessAndRefreshToken = async (userId) => {
     }
 }
 
-const registerUser = asyncHandler(async (req, res) => {
+const registerUser = asyncHandler(async (req, res, next) => {
     const { firstName, lastName, email, password } = req.body;
     if ([firstName, lastName, email, password].some((field) => (field?.trim === " "))) {
-        throw new apiError(401, "All fields are required")
+        return next(new apiError(401, "All fields are required"))
     }
 
     const isUserAvailable = await User.findOne({ email: email });
-    if (isUserAvailable) throw new apiError(401, "User already exists");
+    if (isUserAvailable) return next(new apiError(401, "User already exists"));
 
     const user = await User.create({
         firstName,
@@ -37,7 +37,7 @@ const registerUser = asyncHandler(async (req, res) => {
         password
     })
 
-    if (!user) throw new apiError(500, "Unable to register user");
+    if (!user) return next(new apiError(500, "Unable to register user"));
 
     const createdUser = await User.findOne({ email: email }).select("-password -about");
 
@@ -47,60 +47,61 @@ const registerUser = asyncHandler(async (req, res) => {
 
 });
 
-const loginUser = asyncHandler(async (req, res) => {
+const loginUser = asyncHandler(async (req, res, next) => {
     const { email, password } = req.body;
 
-    if (!email || !password) throw new apiError(401, "Email and password required");
+    if (!email || !password) return next(new apiError(401, "Email and password required"));
 
     const user = await User.findOne({ email: email });
 
-    if (!user) throw new apiError(404, "User not found");
+    if (!user) return next(new apiError(404, "User not found"));
 
     const isPassValid = await user.isPasswordCorrect(password);
 
-    if (!isPassValid) throw new apiError(401, "Password is invalid");
+    if (!isPassValid) return next(new apiError(401, "Password is invalid"));
 
     const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user?._id);
 
     const loggedInUser = await User.findById(user._id).select("-password");
 
-    const options = {
-        httpOnly: true,
-        secure: true
-    }
+
+    //Not using the cookies in devlopment 
+    // const options = {
+    //     httpOnly: false,
+    //     secure: false,       
+    //    sameSite: "none",    
+    // }
 
     return res
         .status(200)
-        .cookie("accessToken", accessToken, options)
-        .cookie("refreshToken", refreshToken, options)
         .json(new apiResponse(200, { user: loggedInUser, accessToken: accessToken, refreshToken: refreshToken }, "User Logged in successfully"))
 });
 
-const logoutUser = asyncHandler(async (req, res) => {
+const logoutUser = asyncHandler(async (req, res, next) => {
     const userId = req.user?._id;
-    if (!userId) throw new apiError(400, "User is not authenticated")
+    if (!userId) return next(new apiError(400, "User is not authenticated"));
 
-    const user = await User.findByIdAndUpdate(userId, {
+    await User.findByIdAndUpdate(userId, {
         $unset: {
             refreshToken: 1
         }
     }, { new: true })
 
-    const options = {
-        httpOnly: true,
-        secure: true
-    }
+
+    // const options = {
+    //     httpOnly: true,
+    //     secure: false,
+    //     sameSite: "lax",
+    // }
 
     return res
         .status(200)
-        .clearCookie("accessToken", options)
-        .clearCookie("refreshToken", options)
         .json(new apiResponse(200, {}, "User logged out successfully"))
 })
 
-const getCurrentUser = asyncHandler(async (req, res) => {
+const getCurrentUser = asyncHandler(async (req, res, next) => {
     const userId = req.user?._id;
-    if (!userId) throw new apiError(400, "User is not authenticated");
+    if (!userId) return next(new apiError(400, "User is not authenticated"));
 
     const user = await User.findById(userId).select("-password");
 
@@ -112,13 +113,13 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 const updateAccountDetails = asyncHandler(async (req, res) => {
     const { firstName, lastName, about } = req.body;
     const changes = {};
-    if (!firstName && !lastName && !about) throw new apiError(401, "At least 1 field is required")
+    if (!firstName && !lastName && !about) return (new apiError(401, "At least 1 field is required"));
     if (firstName) changes.firstName = firstName;
     if (lastName) changes.lastName = lastName;
     if (about) changes.about = about;
 
     const userId = req.user?._id;
-    if (!userId) throw new apiError(400, "User is not authenticated");
+    if (!userId) return next(new apiError(400, "User is not authenticated"));
 
     const user = await User.findByIdAndUpdate(userId, changes, { new: true }).select("-password");
 
@@ -130,16 +131,16 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
 const updatePassword = asyncHandler(async (req, res) => {
     const { oldPassword, newPassword } = req.body;
 
-    if (!oldPassword || !newPassword) throw new apiError(401, "Both field are required")
+    if (!oldPassword || !newPassword) return next(new apiError(401, "Both field are required"));
 
     const userId = req.user?._id;
-    if (!userId) throw new apiError(400, "User is not authenticated");
+    if (!userId) return next(new apiError(400, "User is not authenticated"));
 
     const user = await User.findById(userId);
 
     const isPassValid = await user.isPasswordCorrect(oldPassword);
 
-    if (!isPassValid) throw new apiError(401, "Password is invalid");
+    if (!isPassValid) return next( new apiError(401, "Password is invalid"));
 
     user.password = newPassword;
     user.save({ validateBeforeSave: false });
@@ -150,33 +151,36 @@ const updatePassword = asyncHandler(async (req, res) => {
 
 })
 
-const refreshAccessToken = asyncHandler(async (req, res) => {
-    const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken;
-    if (!incomingRefreshToken) throw new apiError(401, "Refresh token is required");
+const refreshAccessToken = asyncHandler(async (req, res, next) => {
+    const incomingRefreshToken = req.cookies?.accessToken || req.body?.refreshToken;
+    console.log(incomingRefreshToken);
+
+    if (!incomingRefreshToken) return next(new apiError(401, "Refresh token is required"));
 
     const decode = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET_KEY);
 
-    if (!decode) throw new apiError(400, "Refresh token is not valid")
+    if (!decode) return next(new apiError(400, "Refresh token is not valid"));
 
     const user = await User.findById(decode?._id).select("-password");
 
-    if (!user) throw new apiError(404, "User not found");
+    if (!user) return next(new apiError(404, "User not found"));
 
     const userRefreshToken = user?.refreshToken;
 
-    if (userRefreshToken !== incomingRefreshToken) throw new apiError(400, "Refresh token is incorrect");
+    if (userRefreshToken !== incomingRefreshToken) return next(new apiError(400, "Refresh token is incorrect"));
 
     const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user?._id);
 
-    const options = {
-        httpOnly: true,
-        secure: true
-    }
+    // const options = {
+
+    //     httpOnly: true,
+    //     secure: false,       // false in dev, true in production
+    //     sameSite: "none",    // needed for cross-site (5173 → 8000)
+
+    // }
 
     return res
         .status(200)
-        .cookie("accessToken", accessToken, options)
-        .cookie("refreshToken", refreshToken, options)
         .json(new apiResponse(200, { user: user, accessToken: accessToken, refreshToken: refreshToken }, "Access token is refreshed"))
 })
 

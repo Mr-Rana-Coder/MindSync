@@ -1,13 +1,9 @@
 import { Brain } from "lucide-react"
-import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
 const HomePageHeader = () => {
 
     const navigate = useNavigate();
-    const location = useLocation();
-    const active = location.pathname;
-
     return (
         <div className="flex justify-between w-full h-15 items-center">
             <div className="flex p-4">
@@ -15,10 +11,42 @@ const HomePageHeader = () => {
                 <Link to="/" className="text-black font-medium font-sans text-lg hover:cursor-pointer transition-transform transform hover:scale-105 inline-block">MindSync</Link>
             </div>
             <div className="p-4">
-                <Link to="/" className={`pr-8 font-medium text-gray-700 transition-transform transform hover:scale-110 inline-block " hover:text-black`} >Home</Link>
-                <Link to="/features" className={`pr-8 font-medium text-gray-700 transition-transform transform hover:scale-110 inline-block hover:text-black`}>Features</Link>
-                <Link to="/about" className="pr-8 font-medium text-gray-700 hover:text-black transition-transform transform hover:scale-110 inline-block">About</Link>
-                <Link to="/contact" className="font-medium text-gray-700 hover:text-black transition-transform transform hover:scale-110 inline-block">Contact</Link>
+                <NavLink
+                    to="/"
+                    className={({ isActive }) =>
+                        `pr-8 font-medium transition-transform transform hover:scale-110 inline-block ${isActive ? "text-black" : "text-gray-700 hover:text-black"
+                        }`
+                    }
+                >
+                    Home
+                </NavLink>
+                <NavLink
+                    to="/features"
+                    className={({ isActive }) =>
+                        `pr-8 font-medium transition-transform transform hover:scale-110 inline-block ${isActive ? "text-black" : "text-gray-700 hover:text-black"
+                        }`
+                    }
+                >
+                    Features
+                </NavLink>
+                <NavLink
+                    to="/about"
+                    className={({ isActive }) =>
+                        `pr-8 font-medium transition-transform transform hover:scale-110 inline-block ${isActive ? "text-black" : "text-gray-700 hover:text-black"
+                        }`
+                    }
+                >
+                    About
+                </NavLink>
+                <NavLink
+                    to="/contact"
+                    className={({ isActive }) =>
+                        `pr-8 font-medium transition-transform transform hover:scale-110 inline-block ${isActive ? "text-black" : "text-gray-700 hover:text-black"
+                        }`
+                    }
+                >
+                    Contact
+                </NavLink>
             </div>
             <div className="p-4">
                 <button onClick={() => (navigate("/signin"))} className="pr-2 font-medium text-gray-700 w-20 h-8 hover:cursor-pointer hover:text-black transition-transform duration-200 transform hover:scale-110">

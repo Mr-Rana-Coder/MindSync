@@ -2,20 +2,28 @@ import HomePageFooter from "./Components/Footer/HomePageFooter"
 import HomePageHeader from "./Components/Header/HomePageHeader"
 import { Outlet } from 'react-router-dom';
 import LoginHeader from "./Components/Header/LoginHeader"
-import HistoryPage from "./Pages/History/HistoryPage";
-import SettingPage from "./Pages/SettingPage/SettingPage";
-
-
+import { useSelector } from "react-redux";
 
 function App() {
-
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   return (
     <>
-    <HomePageHeader/>
-    <Outlet/>
-    <HomePageFooter/>
+      {
+        isLoggedIn ? (
+          <>
+            <LoginHeader />
+            <Outlet />
+          </>
+        ) : (
+          <>
+            <HomePageHeader />
+            <Outlet />
+            <HomePageFooter />
+          </>
+        )
+      }
     </>
   )
 }
 
-export default App
+export default App;
