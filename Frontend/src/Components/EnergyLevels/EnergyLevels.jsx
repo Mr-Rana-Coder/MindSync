@@ -1,6 +1,6 @@
 import BarChart from "../BarChart/BarChart";
 
-const EnergyLevels = () => {
+const EnergyLevels = (props) => {
     return (
         <div>
             <div className='w-262 h-120 rounded-xl bg-white ml-10'>
@@ -12,7 +12,7 @@ const EnergyLevels = () => {
                 </div>
                 <div className="flex justify-center items-center">
                     <div className="w-248 h-102 pt-3">
-                        <BarChart />
+                        <BarChart barChartPassedData = {props.data.energyBar} activeTab = {props.activeTab} />
                     </div>
                 </div>
             </div>

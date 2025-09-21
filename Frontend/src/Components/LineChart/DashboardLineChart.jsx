@@ -1,41 +1,82 @@
 import {
-    Chart as ChartJS, ArcElement, Tooltip, CategoryScale,
+    Chart as ChartJS,
+    ArcElement,
+    Tooltip,
+    CategoryScale,
     LinearScale,
     PointElement,
     LineElement,
     Title,
 } from "chart.js";
-import { Line } from 'react-chartjs-2';
+import { useMemo } from "react";
+import { Line } from "react-chartjs-2";
 
-const DashboardLineChart = () => {
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    ArcElement
+);
 
-    ChartJS.register(
-        CategoryScale,
-        LinearScale,
-        PointElement,
-        LineElement,
-        Title,
-        Tooltip,
-        ArcElement
-    )
+const DashboardLineChart = ({ lineChartPassedData, activeTab }) => {
+    const lineChartData = useMemo(() => {
+        if (!lineChartPassedData || lineChartPassedData.length === 0) {
+            return { labels: [], datasets: [] };
+        }
 
-    const lineChartData = {
-        labels: ["Aug 8", "Aug 9", "Aug 10", "Aug 11", "Aug 12", "Aug 13", "Today"],
-        datasets: [
-            {
-                label: "Mood Score",
-                data: [0, 2, -2, 2, -2, -3, 1],
-                fill: true,
-                backgroundColor: "rgba(54, 162, 235, 0.12)",
-                borderColor: "rgba(54, 162, 235, 1)",
-                tension: 0.3,
-            },
-        ],
-    }
+        let labels, data;
+        if (activeTab === "weekly") {
+            const sorted = [...lineChartPassedData].sort(
+                (a, b) => new Date(a.day) - new Date(b.day)
+            );
+
+            labels = sorted.map((item) =>
+                new Date(item.day).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                })
+            );
+            data = sorted.map((item) => item.value);
+        } else if (activeTab === "monthly") {
+            const sorted = [...lineChartPassedData].sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+
+            let monthCounters = {};
+            labels = sorted.map(item => {
+                const date = new Date(item.startDate);
+                const month = date.toLocaleDateString("en-US", { month: "short" });
+                if (!monthCounters[month]) monthCounters[month] = 1;
+                const weekNum = monthCounters[month]++;
+                return `${month} Week ${weekNum}`;
+            });
+
+            data = sorted.map(item => item.value);
+        }
+
+        return {
+            labels,
+            datasets: [
+                {
+                    label: "Mood Score",
+                    data,
+                    fill: true,
+                    backgroundColor: "rgba(54, 162, 235, 0.12)",
+                    borderColor: "rgba(54, 162, 235, 1)",
+                    tension: 0.3,
+                },
+            ],
+        };
+    }, [lineChartPassedData, activeTab]);
 
     const lineChartOptions = {
         responsive: true,
         maintainAspectRatio: false,
+        animation: {
+            duration: 800,
+            easing: "easeInOutQuad",
+        },
         plugins: {
             legend: { display: false },
             title: {
@@ -45,17 +86,14 @@ const DashboardLineChart = () => {
         },
         scales: {
             y: {
-                suggestedMin: -3.5,
-                suggestedMax: 3.5,
+                suggestedMin: 0,
+                suggestedMax: 10,
                 ticks: { stepSize: 2 },
             },
         },
     };
 
-    return (
-        <Line data={lineChartData} options={lineChartOptions} />
-    )
-}
+    return <Line data={lineChartData} options={lineChartOptions} />;
+};
 
-
-export default DashboardLineChart
+export default DashboardLineChart;

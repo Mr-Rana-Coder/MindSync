@@ -1,10 +1,12 @@
+import { useMemo } from "react";
 import ReactSpeedometer from "react-d3-speedometer";
 
-const GaugeChart = () => {
+const GaugeChart = ({ gaugeChartPassedData }) => {
+
   return (
     <ReactSpeedometer
       maxValue={10}
-      value={3}
+      value={gaugeChartPassedData}
       needleColor="black"
       segments={5}
       segmentColors={["green", "yellowgreen", "orange", "red", "darkred"]}

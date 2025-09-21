@@ -153,7 +153,6 @@ const updatePassword = asyncHandler(async (req, res) => {
 
 const refreshAccessToken = asyncHandler(async (req, res, next) => {
     const incomingRefreshToken = req.cookies?.accessToken || req.body?.refreshToken;
-    console.log(incomingRefreshToken);
 
     if (!incomingRefreshToken) return next(new apiError(401, "Refresh token is required"));
 

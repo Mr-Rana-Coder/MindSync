@@ -1,6 +1,6 @@
 import GaugeChart from "../StressGaugeChart/GaugeChart";
 
-const StressMeter = () => {
+const StressMeter = (props) => {
     return (
         <div>
             <div className='w-130 h-120 rounded-xl bg-white ml-10'>
@@ -10,7 +10,7 @@ const StressMeter = () => {
 
                 </div>
                 <div className="flex justify-center items-center pt-20">
-                    <GaugeChart />
+                    <GaugeChart gaugeChartPassedData={props.data.stressGauge} />
                 </div>
             </div>
         </div>

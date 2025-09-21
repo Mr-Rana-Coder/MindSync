@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import MoodDistribution from '../../Components/MoodDistribution/MoodDistribution';
 import MoodTimeline from '../../Components/MoodTimeline/MoodTimeline';
 import StressMeter from '../../Components/RecentEntries/RecentEntries';
@@ -7,6 +7,21 @@ import { api } from '../../Api/baseApi';
 
 const Dashboard = () => {
     const [activeTab, setActiveTab] = useState("weekly");
+    const [chartData, setChartData] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await api.get(`/journal/chartData/${activeTab}`);
+                if (response.status === 200) {
+                    setChartData(response.data.data.data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchData();
+    },[activeTab]);
 
     return (
         <div className='w-full h-310 bg-gray-100'>
@@ -47,14 +62,14 @@ const Dashboard = () => {
 
             {/* Mood Distribution and Timeline Componenet */}
             <div className='flex pt-10'>
-                <MoodDistribution />
-                <MoodTimeline />
+                {chartData && <MoodDistribution data={chartData} />}
+                {chartData && <MoodTimeline data={chartData} activeTab = {activeTab}/>}
             </div>
 
             <div className='flex pt-10'>
-                <StressMeter/>
-                <EnergyLevels/>
-            </div>            
+                {chartData && <StressMeter data={chartData} />}
+                {chartData && <EnergyLevels data={chartData} activeTab = {activeTab} />}
+            </div>
         </div>
     )
 }

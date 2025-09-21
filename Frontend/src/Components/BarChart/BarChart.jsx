@@ -7,23 +7,60 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useMemo } from "react";
 import { Bar } from 'react-chartjs-2';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const BarChart = ({ labels, values }) => {
-  const data = {
-    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-    datasets: [
-      {
-        label: "Energy Level",
-        data: [4, 1, 3, 8, 4, 1, 9],
-        backgroundColor: "rgba(54, 162, 235, 0.7)", 
-        borderColor: "rgba(54, 162, 235, 1)",
-        borderWidth: 2,
-      },
-    ],
-  };
+const BarChart = ({ barChartPassedData, activeTab }) => {
+
+  const barData = useMemo(() => {
+    if (!barChartPassedData || barChartPassedData.length === 0) return null;
+
+    let data;
+    let labels;
+
+    if (activeTab === 'weekly') {
+      const sorted = [...barChartPassedData].sort(
+        (a, b) => new Date(a.day) - new Date(b.day)
+      );
+
+      labels = sorted.map((item) =>
+        new Date(item.day).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+        })
+      );
+      data = sorted.map((item) => item.value);
+    } else if (activeTab === 'monthly') {
+      const sorted = [...barChartPassedData].sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+
+      let monthCounters = {};
+      labels = sorted.map(item => {
+        const date = new Date(item.startDate);
+        const month = date.toLocaleDateString("en-US", { month: "short" });
+        if (!monthCounters[month]) monthCounters[month] = 1;
+        const weekNum = monthCounters[month]++;
+        return `${month} Week ${weekNum}`;
+      });
+
+      data = sorted.map(item => item.value);
+    }
+
+    return {
+      labels: labels,
+      datasets: [
+        {
+          label: "Energy Level",
+          data: data,
+          backgroundColor: "rgba(54, 162, 235, 0.7)",
+          borderColor: "rgba(54, 162, 235, 1)",
+          borderWidth: 2,
+        },
+      ],
+    }
+
+  }, [barChartPassedData, activeTab]);
 
   const options = {
     responsive: true,
@@ -46,7 +83,7 @@ const BarChart = ({ labels, values }) => {
     },
   };
 
-  return <Bar data={data} options={options} />;
+  return <Bar data={barData} options={options} />;
 };
 
 export default BarChart;

@@ -3,7 +3,7 @@ import { apiError } from "../Utils/apiError.js";
 import { apiResponse } from "../Utils/apiResponse.js";
 import { asyncHandler } from "../Utils/asyncHandler.js";
 
-const sendMessage = asyncHandler(async (req, res) => {
+const sendMessage = asyncHandler(async (req, res,next) => {
     const { firstName, lastName, email, message } = req.body;
     if ([firstName, lastName, email, message].some((field) => (field?.trim === " "))) {
         return next(new apiError(401, "All fields are required"))

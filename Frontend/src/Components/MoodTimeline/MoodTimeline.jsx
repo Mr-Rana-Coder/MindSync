@@ -1,6 +1,6 @@
 import DashboardLineChart from "../LineChart/DashboardLineChart"
 
-const MoodTimeline = () => {
+const MoodTimeline = (props) => {
     return (
         <div className='w-262 h-135 rounded-xl bg-white ml-10'>
             <div className='flex justify-between items-center pt-6 mx-8'>
@@ -11,7 +11,7 @@ const MoodTimeline = () => {
             </div>
 
             <div className='w-247 h-105 bg-gray- ml-7 mt-6 rounded-xl flex items-center justify-center'>
-                <DashboardLineChart/>
+                <DashboardLineChart lineChartPassedData = {props.data.moodLine} activeTab = {props.activeTab} />
             </div>
         </div>
     )

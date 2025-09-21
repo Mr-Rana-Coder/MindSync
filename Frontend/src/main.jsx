@@ -38,7 +38,7 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <ContactPage />,
-      }, 
+      },
       {
         element: <PrivateRoute />,
         children: [
@@ -66,8 +66,8 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-      <RouterProvider router={router} />
+        <RouterProvider router={router} />
       </PersistGate>
-      </Provider>
+    </Provider>
   </StrictMode>,
 )

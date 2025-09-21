@@ -46,12 +46,12 @@ function processData(entries, type) {
 }
 
 
-const chartData = asyncHandler(async (req, res) => {
+const chartData = asyncHandler(async (req, res, next) => {
     const { type } = req.params;
     if (!type) throw new apiError(400, "Days type is required");
-
+    
     const userId = req.user?._id;
-    if (!userId) throw new apiError(401, "User is not authenticated");
+    if (!userId) return next(new apiError(401, "User is not authenticated"));
 
     let data = {};
 
@@ -84,12 +84,12 @@ const chartData = asyncHandler(async (req, res) => {
         }, "Data fetched successfully"));
 });
 
-const journalAnalysis = asyncHandler(async (req, res) => {
+const journalAnalysis = asyncHandler(async (req, res, next) => {
     const userId = req.user?._id;
-    if (!userId) throw new apiError(400, "User is not authenticated")
+    if (!userId) return next(new apiError(400, "User is not authenticated"));
 
     const { journal } = req.body;
-    if (!journal) throw new apiError(401, "Jounral message is required!")
+    if (!journal) return next(new apiError(401, "Jounral message is required!"));
 
     const completion = client.chat.completions.create({
         model: "gpt-4o-mini",
@@ -114,7 +114,7 @@ const journalAnalysis = asyncHandler(async (req, res) => {
 
     const result = JSON.parse((await completion).choices[0].message.content);
 
-    if (!result) throw new apiError(500, "Unable to process Journal")
+    if (!result) return next(new apiError(500, "Unable to process Journal"));
 
     const newEntry = await Journal.create({
         user: userId,
@@ -125,8 +125,7 @@ const journalAnalysis = asyncHandler(async (req, res) => {
         JournalEntry: journal
     })
 
-    if (!newEntry) throw new apiError(500, "Unable to store data in the Journal model");
-
+    if (!newEntry) return next(new apiError(500, "Unable to store data in the Journal model"));
     return res
         .status(200)
         .JSON(new apiResponse(200, {
@@ -137,16 +136,16 @@ const journalAnalysis = asyncHandler(async (req, res) => {
 
 const journalHistory = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
-    if (!userId) throw new apiError(400, "User is not authenticated");
+    if (!userId) return next(new apiError(400, "User is not authenticated"));
 
     const { page, limit } = req.params;
-    if (!limit || !page) throw new apiError(400, "Limit and page both are required");
+    if (!limit || !page) return next(new apiError(400, "Limit and page both are required"));
 
     const offset = (page - 1) * limit;
 
-    const journal = await Journal.find({user:userId}).skip(offset).limit(limit).select("-user -stressLevel -energyLevel -keyInsights -date");
+    const journal = await Journal.find({ user: userId }).skip(offset).limit(limit).select("-user -stressLevel -energyLevel -keyInsights -date");
 
-    if (!journal) throw new apiError(500, "Unable to fetch the journals");
+    if (!journal) return next(new apiError(500, "Unable to fetch the journals"));
 
     return res
         .status(200)
