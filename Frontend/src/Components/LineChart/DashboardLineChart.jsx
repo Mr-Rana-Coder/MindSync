@@ -7,8 +7,9 @@ import {
     PointElement,
     LineElement,
     Title,
+    Filler
 } from "chart.js";
-import { useMemo } from "react";
+import { forwardRef, useMemo } from "react";
 import { Line } from "react-chartjs-2";
 
 ChartJS.register(
@@ -18,13 +19,22 @@ ChartJS.register(
     LineElement,
     Title,
     Tooltip,
-    ArcElement
+    ArcElement,
+    Filler
 );
 
-const DashboardLineChart = ({ lineChartPassedData, activeTab }) => {
+const DashboardLineChart = forwardRef(({ lineChartPassedData, activeTab },ref) => {
     const lineChartData = useMemo(() => {
         if (!lineChartPassedData || lineChartPassedData.length === 0) {
-            return { labels: [], datasets: [] };
+            return {
+                labels: [],
+                datasets: [
+                    {
+                        label: "Mood Score",
+                        data: [],
+                    },
+                ],
+            };
         }
 
         let labels, data;
@@ -89,11 +99,21 @@ const DashboardLineChart = ({ lineChartPassedData, activeTab }) => {
                 suggestedMin: 0,
                 suggestedMax: 10,
                 ticks: { stepSize: 2 },
+                title: {
+                    display: true,
+                    text: "Mood Level (0 = Low, 10 = High)",
+                    font: {
+                        family: "sans-serif",
+                        size: 14,
+                        weight: "500",
+                    },
+                    color: "#1F2937",
+                },
             },
         },
     };
 
-    return <Line data={lineChartData} options={lineChartOptions} />;
-};
+    return <Line ref={ref} data={lineChartData} options={lineChartOptions} />;
+});
 
 export default DashboardLineChart;

@@ -1,6 +1,7 @@
+import { forwardRef } from "react";
 import BarChart from "../BarChart/BarChart";
 
-const EnergyLevels = (props) => {
+const EnergyLevels = forwardRef((props,ref) => {
     return (
         <div>
             <div className='w-262 h-120 rounded-xl bg-white ml-10'>
@@ -12,13 +13,13 @@ const EnergyLevels = (props) => {
                 </div>
                 <div className="flex justify-center items-center">
                     <div className="w-248 h-102 pt-3">
-                        <BarChart barChartPassedData = {props.data.energyBar} activeTab = {props.activeTab} />
+                        <BarChart ref={ref} barChartPassedData = {props.data.energyBar} activeTab = {props.activeTab} />
                     </div>
                 </div>
             </div>
 
         </div>
     )
-}
+})
 
 export default EnergyLevels;

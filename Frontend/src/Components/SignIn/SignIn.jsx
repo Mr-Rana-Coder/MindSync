@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { userLogin } from "../../Api/auth.api";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { setCredentials } from "../../Store/authSlice";
+import { setCredentials, setUser } from "../../Store/authSlice";
 
 
 const SignIn = () => {
@@ -34,6 +34,7 @@ const SignIn = () => {
         try {
             const response = await userLogin(data);
             dispatch(setCredentials(response))
+            dispatch(setUser(response))
             navigate("/dashboard");
         } catch (error) {
             setError("loginForm", { message: error.response.data.message })

@@ -110,7 +110,7 @@ const getCurrentUser = asyncHandler(async (req, res, next) => {
         .json(new apiResponse(200, { user: user }, "User fetched successfully"));
 })
 
-const updateAccountDetails = asyncHandler(async (req, res) => {
+const updateAccountDetails = asyncHandler(async (req, res,next) => {
     const { firstName, lastName, about } = req.body;
     const changes = {};
     if (!firstName && !lastName && !about) return (new apiError(401, "At least 1 field is required"));
@@ -128,7 +128,7 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
         .json(new apiResponse(201, { user: user }, "Details updated successfully"))
 })
 
-const updatePassword = asyncHandler(async (req, res) => {
+const updatePassword = asyncHandler(async (req, res,next) => {
     const { oldPassword, newPassword } = req.body;
 
     if (!oldPassword || !newPassword) return next(new apiError(401, "Both field are required"));

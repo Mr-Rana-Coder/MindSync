@@ -5,11 +5,11 @@ import {
   LineElement,
   Title,
   Legend,
-  layouts
 } from "chart.js";
-import { Pie} from 'react-chartjs-2';
+import { useMemo } from "react";
+import { Pie } from 'react-chartjs-2';
 
-const HomePagePieChart = () => {
+const HomePagePieChart = ({ activeTab }) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -21,30 +21,34 @@ const HomePagePieChart = () => {
     ArcElement
   )
 
-  const pieChartData = {
-    labels: ['Happy', 'Excited', 'Neutral', 'Stressed', 'Sad'],
-    datasets: [
-      {
-        label: 'Mood',
-        data: [10, 10, 10, 10, 10],
-        backgroundColor: [
-              'rgba(229, 231, 235, 1)',
-              'rgba(209, 213, 219, 1)',
-              'rgba(75, 85, 99, 1)',
-              'rgba(107, 114, 128, 1)',
-              'rgba(31, 41, 55, 1)',
-        ],
-        borderColor: [
-          'rgba(229, 231, 235, 0.7)',
-          'rgba(209, 213, 219, 0.7)',
-          'rgba(156, 163, 175, 0.7)',
-          'rgba(107, 114, 128, 0.7)',
-          'rgba(75, 85, 99, 0.7)',
-        ],
-        borderWidth: 0.5,
-      },
-    ],
-  };
+  const pieChartData = useMemo(() => {
+    const pieData = activeTab === "weekly" ? [5, 15, 20, 19, 10] : [9, 18, 11, 6, 21];
+
+    return {
+      labels: ['Happy', 'Excited', 'Neutral', 'Stressed', 'Sad'],
+      datasets: [
+        {
+          label: 'Mood',
+          data: pieData,
+          backgroundColor: [
+            'rgba(229, 231, 235, 1)',
+            'rgba(209, 213, 219, 1)',
+            'rgba(75, 85, 99, 1)',
+            'rgba(107, 114, 128, 1)',
+            'rgba(31, 41, 55, 1)',
+          ],
+          borderColor: [
+            'rgba(229, 231, 235, 0.7)',
+            'rgba(209, 213, 219, 0.7)',
+            'rgba(156, 163, 175, 0.7)',
+            'rgba(107, 114, 128, 0.7)',
+            'rgba(75, 85, 99, 0.7)',
+          ],
+          borderWidth: 0.5,
+        },
+      ],
+    };
+  }, [activeTab]);
 
   const pieChartOptions = {
     plugins: {
@@ -60,7 +64,7 @@ const HomePagePieChart = () => {
       },
     },
     maintainAspectRatio: false,
-    radius:"90%"
+    radius: "90%"
   };
 
   return (

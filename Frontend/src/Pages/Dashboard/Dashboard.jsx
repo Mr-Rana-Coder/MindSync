@@ -1,13 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import MoodDistribution from '../../Components/MoodDistribution/MoodDistribution';
 import MoodTimeline from '../../Components/MoodTimeline/MoodTimeline';
 import StressMeter from '../../Components/RecentEntries/RecentEntries';
 import EnergyLevels from '../../Components/EnergyLevels/EnergyLevels';
 import { api } from '../../Api/baseApi';
+import ExportChart from '../../Components/ExportChart/ExportChart';
 
 const Dashboard = () => {
     const [activeTab, setActiveTab] = useState("weekly");
     const [chartData, setChartData] = useState(null);
+    const moodDistributionRef = useRef(null);
+    const moodTimeLineRef = useRef(null);
+    const stressMeterRef = useRef(null);
+    const energyLevelRef = useRef(null);
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -21,7 +27,7 @@ const Dashboard = () => {
             }
         }
         fetchData();
-    },[activeTab]);
+    }, [activeTab]);
 
     return (
         <div className='w-full h-310 bg-gray-100'>
@@ -56,19 +62,26 @@ const Dashboard = () => {
                             Monthly
                         </button>
                     </div>
-                    <button className="bg-white h-10 w-30 rounded-md border-2 border-gray-200 text-gray-700 font-medium hover:bg-gray-200 hover:cursor-pointer transition-transform duration-200 transform hover:scale-110 flex justify-center items-center"><span><svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download-icon lucide-download"><path d="M12 15V3" /><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><path d="m7 10 5 5 5-5" /></svg></span><span className='pl-1'>Export</span></button>
+                    <div>
+                        <ExportChart
+                        moodDistributionRef = {moodDistributionRef}
+                        moodTimeLineRef = {moodTimeLineRef}
+                        stressMeterRef = {stressMeterRef}
+                        energyLevelRef = {energyLevelRef} 
+                        />
+                    </div>
                 </div>
             </div>
 
             {/* Mood Distribution and Timeline Componenet */}
             <div className='flex pt-10'>
-                {chartData && <MoodDistribution data={chartData} />}
-                {chartData && <MoodTimeline data={chartData} activeTab = {activeTab}/>}
+                {chartData && <MoodDistribution ref = {moodDistributionRef} data={chartData} />}
+                {chartData && <MoodTimeline ref = {moodTimeLineRef} data={chartData} activeTab={activeTab} />}
             </div>
 
             <div className='flex pt-10'>
-                {chartData && <StressMeter data={chartData} />}
-                {chartData && <EnergyLevels data={chartData} activeTab = {activeTab} />}
+                {chartData && <StressMeter ref = {stressMeterRef} data={chartData} />}
+                {chartData && <EnergyLevels ref = {energyLevelRef} data={chartData} activeTab={activeTab} />}
             </div>
         </div>
     )

@@ -1,6 +1,79 @@
-import React from 'react'
+import { useEffect, useMemo, useState } from "react";
+import { api } from "../../Api/baseApi";
+import Pagination from "../../Components/PaginationComponent/Pagination";
+import JournalEntry from "../../Components/JournalEntry/JournalEntry";
 
 const HistoryPage = () => {
+    const [entries, setEntries] = useState({ journal: [], totalEntries: 0 });
+    const [expandedIndex, setExpandedIndex] = useState(null);
+    const [selectedMood, setSelectedMood] = useState("All Moods");
+    const [totalPages, setTotalPages] = useState(1);
+    const [pageNumber, setPageNumber] = useState(1);
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const countWords = (text) => text.trim() === "" ? 0 : text.trim().split(/\s+/).length;
+
+    const dateFormat = (isoDate) => new Date(isoDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    const getMoodCategory = (mood) => {
+        if (mood <= 2) return "Sad";
+        if (mood <= 4) return "Stressed";
+        if (mood <= 6) return "Neutral";
+        if (mood <= 8) return "Excited";
+        return "Happy";
+    }
+
+    const truncateWords = (text, limit) => {
+        const words = text.split(/\s+/);
+        if (words.length <= limit) return text;
+        return words.slice(0, limit).join(" ") + "...";
+    };
+
+    const filteredEntries = useMemo(() => {
+        return selectedMood === "All Moods"
+            ? [...entries.journal].sort((a, b) => new Date(b.date) - new Date(a.date))
+            : entries.journal.filter(e => getMoodCategory(e.moodLevel) === selectedMood)
+                .sort((a, b) => new Date(b.date) - new Date(a.date));
+    }, [entries, selectedMood]);
+
+    const searchedEntries = useMemo(() => {
+        return filteredEntries.filter(e => e.journalEntry.toLowerCase().includes(searchQuery.toLowerCase()));
+    }, [filteredEntries, searchQuery]);
+
+    const page = pageNumber;
+    const limit = 5;
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await api.get(`/journal/journal-history/${page}/${limit}`);
+                if (response.status === 200) {
+                    setEntries(response.data.data);
+                    setTotalPages(Math.ceil(response.data.data.totalEntries / limit));
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchData();
+    }, [page]);
+
+    const renderedEntries = useMemo(() => {
+        return searchedEntries.map((entry, index) => (
+            <JournalEntry
+                key={entry.id || index}
+                entry={entry}
+                index={index}
+                expandedIndex={expandedIndex}
+                setExpandedIndex={setExpandedIndex}
+                countWords={countWords}
+                dateFormat={dateFormat}
+                getMoodCategory={getMoodCategory}
+                truncateWords={truncateWords}
+                isLast={index === searchedEntries.length - 1}
+            />
+        ));
+    }, [searchedEntries, expandedIndex]);
+
     return (
         <div>
             <div className='pl-10'>
@@ -18,12 +91,18 @@ const HistoryPage = () => {
                         <input
                             type="text"
                             placeholder="Search entries..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+
                             className="outline-none bg-transparent w-full placeholder-gray-400 font-sans font-medium text-gray-800"
                         />
                     </div>
 
                     <div className='pl-4'>
-                        <select className='w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-0 font-medium text-gray-700 bg-white hover:cursor-pointer h-12 appearance-auto'>
+                        <select
+                            value={selectedMood}
+                            onChange={(e) => setSelectedMood(e.target.value)}
+                            className='w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-0 font-medium text-gray-700 bg-white hover:cursor-pointer h-12 appearance-auto'>
                             <option value="Happy"> Happy</option>
                             <option value="Neutral"> Neutral</option>
                             <option value="Sad">Sad</option>
@@ -35,105 +114,20 @@ const HistoryPage = () => {
                 </div>
 
                 <div className='pr-10'>
-                    <p className='font-medium font-sans text-lg text-gray-500'>147 entries total</p>
+                    <p className='font-medium font-sans text-lg text-gray-500'>Total Entries: {entries.totalEntries}</p>
                 </div>
             </div>
 
-            <div className='mx-10 w-407 mb-25 h-200 border-1 rounded-xl border-gray-300 mt-8 shadow-sm'>
-                <div className='w-full'>
-                    <div className='flex pt-5 pl-5 items-center'>
-                        <p className='font-sans font-medium text-md text-gray-800 pr-3'>January 14, 2025</p>
-                        <div className='w-15 h-5 font-sans font-medium text-sm text-gray-800 bg-gray-200 rounded-xl flex items-center justify-center'>Happy</div>
-                    </div>
-
-                    <div className='font-sans font-medium text-gray-700 text-lg pt-3 pl-5'>
-                        Today was and an amazing day ! I finally finished the project i've been working on for weeks . The feeling of accomplishment is incredible and i am very happy...
-                    </div>
-
-                    <div className='flex justify-between pt-4 pl-5 items-center'>
-                        <p className='font-sans font-medium text-gray-500 text-md'> Word Count: 487</p>
-                        <div className='font-sans font-medium text-gray-500 text-md pr-5'>Expand <span></span></div>
-                    </div>
-                </div>
-                <div className="flex justify-center my-6">
-                    <hr className="w-410 border-t-2 border-gray-200" />
-                </div>
-
-                <div className='w-full'>
-                    <div className='flex pl-5 items-center'>
-                        <p className='font-sans font-medium text-md text-gray-800 pr-3'>January 14, 2025</p>
-                        <div className='w-15 h-5 font-sans font-medium text-sm text-gray-800 bg-gray-200 rounded-xl flex items-center justify-center'>Happy</div>
-                    </div>
-
-                    <div className='font-sans font-medium text-gray-700 text-lg pt-3 pl-5'>
-                        Today was and an amazing day ! I finally finished the project i've been working on for weeks . The feeling of accomplishment is incredible and i am very happy...
-                    </div>
-
-                    <div className='flex justify-between pt-4 pl-5 items-center'>
-                        <p className='font-sans font-medium text-gray-500 text-md'> Word Count: 487</p>
-                        <div className='font-sans font-medium text-gray-500 text-md pr-5'>Expand <span></span></div>
-                    </div>
-                </div>
-                <div className="flex justify-center my-6">
-                    <hr className="w-410 border-t-2 border-gray-200" />
-                </div>
-
-                <div className='w-full'>
-                    <div className='flex pl-5 items-center'>
-                        <p className='font-sans font-medium text-md text-gray-800 pr-3'>January 14, 2025</p>
-                        <div className='w-15 h-5 font-sans font-medium text-sm text-gray-800 bg-gray-200 rounded-xl flex items-center justify-center'>Happy</div>
-                    </div>
-
-                    <div className='font-sans font-medium text-gray-700 text-lg pt-3 pl-5'>
-                        Today was and an amazing day ! I finally finished the project i've been working on for weeks . The feeling of accomplishment is incredible and i am very happy...
-                    </div>
-
-                    <div className='flex justify-between pt-4 pl-5 items-center'>
-                        <p className='font-sans font-medium text-gray-500 text-md'> Word Count: 487</p>
-                        <div className='font-sans font-medium text-gray-500 text-md pr-5'>Expand <span></span></div>
-                    </div>
-                </div>
-                <div className="flex justify-center my-6">
-                    <hr className="w-410 border-t-2 border-gray-200" />
-                </div>
-
-                <div className='w-full h-30'>
-                    <div className='flex pl-5 items-center'>
-                        <p className='font-sans font-medium text-md text-gray-800 pr-3'>January 14, 2025</p>
-                        <div className='w-15 h-5 font-sans font-medium text-sm text-gray-800 bg-gray-200 rounded-xl flex items-center justify-center'>Happy</div>
-                    </div>
-
-                    <div className='font-sans font-medium text-gray-700 text-lg pt-3 pl-5'>
-                        Today was and an amazing day ! I finally finished the project i've been working on for weeks . The feeling of accomplishment is incredible and i am very happy...
-                    </div>
-
-                    <div className='flex justify-between pt-4 pl-5 items-center'>
-                        <p className='font-sans font-medium text-gray-500 text-md'> Word Count: 487</p>
-                        <div className='font-sans font-medium text-gray-500 text-md pr-5'>Expand <span></span></div>
-                    </div>
-                </div>
-                <div className="flex justify-center my-6">
-                    <hr className="w-410 border-t-2 border-gray-200" />
-                </div>
-
-                <div className='w-full h-30'>
-                    <div className='flex pl-5 items-center'>
-                        <p className='font-sans font-medium text-md text-gray-800 pr-3'>January 14, 2025</p>
-                        <div className='w-15 h-5 font-sans font-medium text-sm text-gray-800 bg-gray-200 rounded-xl flex items-center justify-center'>Happy</div>
-                    </div>
-
-                    <div className='font-sans font-medium text-gray-700 text-lg pt-3 pl-5'>
-                        Today was and an amazing day ! I finally finished the project i've been working on for weeks . The feeling of accomplishment is incredible and i am very happy...
-                    </div>
-
-                    <div className='flex justify-between pt-4 pl-5 items-center'>
-                        <p className='font-sans font-medium text-gray-500 text-md'> Word Count: 487</p>
-                        <div className='font-sans font-medium text-gray-500 text-md pr-5 hover:cursor-pointer hover:text-gray-800'>Expand</div>
-                    </div>
-                </div>
+            <div className='mx-10 w-407 mb-10 min-h-[100px] border-1 rounded-xl border-gray-300 mt-8 shadow-sm'>
+                {renderedEntries}
             </div>
-
+            
+            {/* Pagination Component */}
+            <div className="mb-10">
+                <Pagination totalPages={totalPages} onPageChange={(page) => (setPageNumber(page))} />
+            </div>
         </div>
+
     )
 }
 

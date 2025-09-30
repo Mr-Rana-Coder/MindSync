@@ -1,6 +1,7 @@
+import { forwardRef } from "react"
 import DashboardLineChart from "../LineChart/DashboardLineChart"
 
-const MoodTimeline = (props) => {
+const MoodTimeline = forwardRef((props,ref) => {
     return (
         <div className='w-262 h-135 rounded-xl bg-white ml-10'>
             <div className='flex justify-between items-center pt-6 mx-8'>
@@ -11,10 +12,10 @@ const MoodTimeline = (props) => {
             </div>
 
             <div className='w-247 h-105 bg-gray- ml-7 mt-6 rounded-xl flex items-center justify-center'>
-                <DashboardLineChart lineChartPassedData = {props.data.moodLine} activeTab = {props.activeTab} />
+                <DashboardLineChart ref={ref} lineChartPassedData = {props.data.moodLine} activeTab = {props.activeTab} />
             </div>
         </div>
     )
-}
+})
 
 export default MoodTimeline

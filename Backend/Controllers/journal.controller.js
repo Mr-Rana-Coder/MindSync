@@ -49,7 +49,7 @@ function processData(entries, type) {
 const chartData = asyncHandler(async (req, res, next) => {
     const { type } = req.params;
     if (!type) throw new apiError(400, "Days type is required");
-    
+
     const userId = req.user?._id;
     if (!userId) return next(new apiError(401, "User is not authenticated"));
 
@@ -143,14 +143,37 @@ const journalHistory = asyncHandler(async (req, res) => {
 
     const offset = (page - 1) * limit;
 
-    const journal = await Journal.find({ user: userId }).skip(offset).limit(limit).select("-user -stressLevel -energyLevel -keyInsights -date");
+    const result = await Journal.aggregate([
+        {
+            $match: {
+                user: userId
+            }
+        },
+        {
+            $facet: {
+                data: [
+                    { $skip: offset },
+                    { $limit: parseInt(limit) },
+                    { $project: { user: 0, stressLevel: 0, energyLevel: 0} }
+                ],
+                total: [
+                    {$count: "count"}
+                ]
+            }
+        }
+    ]);
+
+    const journal = result[0].data;
+    const totalEntries = result[0].total[0]?.count || 0;
+
 
     if (!journal) return next(new apiError(500, "Unable to fetch the journals"));
 
     return res
         .status(200)
         .json(new apiResponse(200, {
-            journal: journal
+            journal: journal,
+            totalEntries: totalEntries,
         }, "Entries fetched successfully"))
 
 });

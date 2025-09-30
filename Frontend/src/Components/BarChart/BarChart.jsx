@@ -6,16 +6,29 @@ import {
   Title,
   Tooltip,
   Legend,
+  Filler,
 } from "chart.js";
-import { useMemo } from "react";
+import { forwardRef, useMemo } from "react";
 import { Bar } from 'react-chartjs-2';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, Filler);
 
-const BarChart = ({ barChartPassedData, activeTab }) => {
+const BarChart = forwardRef(({ barChartPassedData, activeTab }, ref) => {
 
   const barData = useMemo(() => {
-    if (!barChartPassedData || barChartPassedData.length === 0) return null;
+    if (!barChartPassedData || barChartPassedData.length === 0)
+      return {
+        labels: [],
+        datasets: [
+          {
+            label: "Energy Level",
+            data: [],
+            backgroundColor: "rgba(54, 162, 235, 0.7)",
+            borderColor: "rgba(54, 162, 235, 1)",
+            borderWidth: 2,
+          },
+        ],
+      };
 
     let data;
     let labels;
@@ -79,11 +92,21 @@ const BarChart = ({ barChartPassedData, activeTab }) => {
         ticks: {
           stepSize: 2,
         },
+        title: {
+          display: true,
+          text: "Energy Level (0 = Low, 10 = High)",
+          font: {
+            family: "sans-serif",
+            size: 14,
+            weight: "500",
+          },
+          color: "#1F2937",
+        },
       },
     },
   };
 
-  return <Bar data={barData} options={options} />;
-};
+  return <Bar ref={ref} data={barData} options={options} />;
+});
 
 export default BarChart;

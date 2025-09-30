@@ -1,6 +1,7 @@
+import { forwardRef } from "react";
 import GaugeChart from "../StressGaugeChart/GaugeChart";
 
-const StressMeter = (props) => {
+const StressMeter = forwardRef((props, ref) => {
     return (
         <div>
             <div className='w-130 h-120 rounded-xl bg-white ml-10'>
@@ -10,11 +11,11 @@ const StressMeter = (props) => {
 
                 </div>
                 <div className="flex justify-center items-center pt-20">
-                    <GaugeChart gaugeChartPassedData={props.data.stressGauge} />
+                    <GaugeChart ref={ref} gaugeChartPassedData={props.data.stressGauge} />
                 </div>
             </div>
         </div>
     )
-}
+})
 
 export default StressMeter;

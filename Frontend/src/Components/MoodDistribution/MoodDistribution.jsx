@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { forwardRef } from "react";
 import DashboardPieChart from "../PieChart/DashboardPieChart"
 
-const MoodDistribution = (props) => {
+const MoodDistribution = forwardRef((props, ref) => {
     const pieChartData = props.data.moodPie;
 
     const moods = ["Happy", "Excited", "Neutral", "Stressed", "Sad"];
@@ -16,7 +16,7 @@ const MoodDistribution = (props) => {
 
             <div className='flex justify-center items-center mt-7'>
                 <div className='rounded-full h-70 w-70'>
-                    <DashboardPieChart pieChartPassedData={props.data.moodPie} />
+                    <DashboardPieChart ref={ref} pieChartPassedData={props.data.moodPie} />
                 </div>
             </div>
 
@@ -36,6 +36,6 @@ const MoodDistribution = (props) => {
         </div>
 
     )
-}
+})
 
 export default MoodDistribution

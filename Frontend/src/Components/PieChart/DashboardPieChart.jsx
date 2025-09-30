@@ -4,11 +4,12 @@ import {
   PointElement,
   LineElement,
   Title,
+  Filler
 } from "chart.js";
-import {  useMemo } from "react";
+import { forwardRef, useMemo } from "react";
 import { Pie } from 'react-chartjs-2';
 
-const DashboardPieChart = ({ pieChartPassedData }) => {
+const DashboardPieChart = forwardRef(({ pieChartPassedData },ref) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -16,11 +17,36 @@ const DashboardPieChart = ({ pieChartPassedData }) => {
     LineElement,
     Title,
     Tooltip,
-    ArcElement
+    ArcElement,
+    Filler
   )
 
   const pieChartData = useMemo(() => {
-    if (!pieChartPassedData) return null;
+    if (!pieChartPassedData)
+      return {
+        labels: ['Happy', 'Excited', 'Neutral', 'Stressed', 'Sad'],
+        datasets: [
+          {
+            label: 'Mood',
+            data: [],
+            backgroundColor: [
+              'rgba(229, 231, 235, 1)',
+              'rgba(209, 213, 219, 1)',
+              'rgba(75, 85, 99, 1)',
+              'rgba(107, 114, 128, 1)',
+              'rgba(31, 41, 55, 1)',
+            ],
+            borderColor: [
+              'rgba(229, 231, 235, 1)',
+              'rgba(209, 213, 219, 1)',
+              'rgba(156, 163, 175, 1)',
+              'rgba(107, 114, 128, 1)',
+              'rgba(75, 85, 99, 1)',
+            ],
+            borderWidth: 0.5,
+          },
+        ],
+      };
     const moods = ["Happy", "Excited", "Neutral", "Stressed", "Sad"];
     const dataArray = moods.map(mood => Number(pieChartPassedData[mood] || 0));
 
@@ -48,7 +74,7 @@ const DashboardPieChart = ({ pieChartPassedData }) => {
         },
       ],
     }
-  },[pieChartPassedData]);
+  }, [pieChartPassedData]);
 
   const pieChartOptions = {
     animation: {
@@ -73,9 +99,9 @@ const DashboardPieChart = ({ pieChartPassedData }) => {
   };
 
   return (
-    <Pie data={pieChartData} options={pieChartOptions} />
+    <Pie ref={ref} data={pieChartData} options={pieChartOptions} />
   )
-}
+})
 
 
 export default DashboardPieChart

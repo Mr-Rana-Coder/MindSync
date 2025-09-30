@@ -36,7 +36,7 @@ const HomePage = () => {
                 </div>
                 <div className='pl-30'>
                     <div className="w-[500px] h-[350px] bg-gray-200 rounded-xl flex items-center justify-center text-gray-500">
-                       <img src="https://img.freepik.com/premium-photo/brain-is-center-image_1266280-67653.jpg" alt="" className="w-full h-full rounded-xl "/>
+                       <img src="../../../public/Images/Mind Sync Image.jpg" alt="" className="w-full h-full rounded-xl "/>
                     </div>
                 </div>
             </div>
@@ -119,13 +119,13 @@ const HomePage = () => {
                         <div className='bg-gray-50 w-1/2 p-3 mr-3 rounded-xl h-90'>
                             <p className='pl-3 pt-3 pb-2 font-medium font-sans text-black'>Mood Distribution</p>
                             <div className='w-152 h-69 rounded-xl flex items-center justify-center'>
-                                <HomePagePieChart/>
+                                <HomePagePieChart activeTab = {activeTab}/>
                             </div>
                         </div>
                         <div className='bg-gray-50 w-1/2 p-2 ml-3 rounded-xl h-90'>
                             <p className='pl-3 pt-3 pb-2 font-medium font-sans text-black'>Mood Timeline</p>
                             <div className='bg-gray-100 w-150 h-69 rounded-xl m-3 flex items-center justify-center'>
-                                <HomePageLineChart/>
+                                <HomePageLineChart activeTab = {activeTab}/>
                             </div>
                         </div>
                     </div>
